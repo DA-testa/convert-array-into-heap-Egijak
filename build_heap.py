@@ -1,25 +1,73 @@
 # python3
+# Egija Kokoreviča 	221RDB288
+
+def sift_down(data, swaps, start, end):
+    root=start
+    while True:
+        child = 2*root+1
+        if child > end:
+            break
+        
+        if child+1 <= end and data[child] > data[child+1]:
+            child += 1
+
+        if data[root] > data[child]:
+            swaps.append((root, child))
+            data[root], data[child] = data[child], data[root]
+            root=child
+        else:
+            break
 
 
 def build_heap(data):
     swaps = []
-    # TODO: Creat heap and heap sort
-    # try to achieve  O(n) and not O(n2)
-
-
+    n = len(data)
+    for i in range(n//2-1, -1, -1):
+        sift_down(data, swaps, i, n-1)
     return swaps
+   
+
+ 
+    
 
 
 def main():
     
-    # TODO : add input and corresponding checks
-    # add another input for I or F 
-    # first two tests are from keyboard, third test is from a file
+    '''Printing answer'''
+
+    ievade = input("Ievdi F vai I:")
+    if "F" in ievade:
+        file = input()
+
+        if "a" in file:
+            print("You can't use file names with letter 'a'")
+            return
+
+        try:
+            with open ("tests/"+file) as fp:
+                n = int(fp.readline())
+                data = list(map(int, fp.readline().split()))
+
+        except FileNotFoundError:
+            print("Inprecision in the file name")
+            return
+
+    if "I" in ievade:  
+        try:
+                    
+            n = int(input()) 
+            data = list(map(int, input().split()))
+
+        except ValueError:
+            print("Inprecision in input")
+            return  
+
+
 
 
     # input from keyboard
-    n = int(input())
-    data = list(map(int, input().split()))
+    
+   
 
     # checks if lenght of data is the same as the said lenght
     assert len(data) == n
@@ -28,8 +76,7 @@ def main():
     # and give back all swaps
     swaps = build_heap(data)
 
-    # TODO: output how many swaps were made, 
-    # this number should be less than 4n (less than 4*len(data))
+   
 
 
     # output all swaps
